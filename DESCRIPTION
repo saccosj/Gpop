@@ -4,8 +4,7 @@ Title: Generalizing t-test results to Superpopulations
 Version: 0.1.0
 Author: Shane J Sacco
 Maintainer: Shane J Sacco <shane.sacco@uconn.edu>
-Description: Three subpackages are provided for one sample, two sample, and regression one sample t-tests. The output displays the magnitude of change in the hypothesized population effect needed to invalidate 
-the statistical inference of the related t, given some alpha. The probability of that population effect needed to invadiate the statstical inference is also provided.
+Description: Three subpackages are provided for one sample, two sample, and regression one sample t-tests. The output displays the magnitude of change in the hypothesized population effect needed to invalidate the statistical inference of the related t, given some alpha. The probability of that population effect needed to invadiate the statstical inference is also provided.
 License: Free use with citation
 Encoding: UTF-8
 LazyData: true
