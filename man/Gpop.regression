@@ -1,0 +1,116 @@
+\name{Gpop.regression}
+\alias{Gpop.regression}
+
+\title{
+Predict Generalization of One Sample t-tests in Linear Regression to a Superpopulation that Invalidates the Statistical Inference
+}
+
+\description{
+Receives an observed beta coefficient and standard error and hypothesized population beta. Runs an iterative process where t-tests are run until the statistical inference at a given alpha is invalidated. This is done by increasing or decreasing the population beta by "G", where "G" is defined as c (a real number) times beta.
+}
+
+\usage{
+Gpop.regression (B,
+                 SE,
+                 n,
+                 k,
+                 tails = 1,
+                 alpha = 0.05,
+                 Gmax = 10,
+                 steps = 0.0001,
+                 full = F,
+                 digits = 5)
+}
+
+\arguments{
+  \item{B}{
+  The observed beta coefficient
+  }
+  \item{SE}{
+  The observed standard error of that beta
+  }
+  \item{n}{
+  The observed sample size
+  }
+  \item{k}{
+  The total number of predictor variables in the regression model
+  }
+  \item{tails}{
+  The number of tails for statistic inference tests. The default is 1, and can be changed to 2.
+  }
+  \item{alpha}{
+  The alpha criteria set for statistical inference tests. The default is .05.
+  }
+  \item{Gmax}{
+  The maximum value G can take in the iterated t-tests.
+  }
+  \item{steps}{
+  The increment that G increases (or decreases) to reach Gmax in the iterated t-tests.
+  }
+  \item{full}{
+  When set to TRUE, displays the results of each iterated test as well as when/if the statistical inference validates once again. The default is FALSE.
+  }
+  \item{digits}{
+  The number of digits to round produced output. The default is 5.
+  }
+}
+
+\value{
+  \item{output }{If full = FALSE, returns a string containing observed t-test results, its p-value, the c and G in which the inference was invalidated, the difference between beta and G, and the probability of that G occurring. If full = TRUE, the prior information is returned, as well as, another set of these values if the statistical inference is validated again at some larger G. Additionally, "results", described below is returned.}
+  \item{results }{If full = TRUE, a multidimensional array is returned containing the results of each iterated t-test performed. This includes the utilized G, the resulting t, and its p-value.}
+
+}
+\references{
+}
+\author{
+Shane J Sacco
+}
+\note{
+}
+
+\section{Warning }{If you enter sample values for an observed t-test that are not already statistically significant, you must change full to "TRUE" to view when observed inference becomes validated.}
+
+\seealso{
+}
+
+\examples{
+##EXAMPLE 1
+Gpop.regression (B = 1.10, SE = 0.90, n = 320, k = 4, tails = 1, alpha = 0.05, Gmax = 10, steps = 0.0001, full = F, digits = 5)
+
+#EXAMPLE 1 OUTPUT
+[1] P-value <  0.05  @ c =  2.3497 , G = 2.58467 , B - G =  -1.48467 , p of G =  0.00218
+
+
+#EXAMPLE 2
+Gpop.regression (B = 0.10, SE = 0.03, n = 78, k = 1, tails = 1, alpha = 0.05, Gmax = 2, steps = 0.1, full = T, digits = 5)
+
+#EXAMPLE 2 OUTPUT
+[1] P-value >  0.05  @ c =  0.5 , G = 0.05 , B - G =  0.05 , p of G =  0.04985
+[1] P-value <  0.05  @ c =  1.4 , G = 0.14 , B - G =  -0.04 , p of G =  1e-05
+      [,1]       [,2]    [,3]
+ [1,]  0.0  3.3333333 0.00066
+ [2,]  0.1  3.0000000 0.00182
+ [3,]  0.2  2.6666667 0.00468
+ [4,]  0.3  2.3333333 0.01114
+ [5,]  0.4  2.0000000 0.02454
+ [6,]  0.5  1.6666667 0.04985
+ [7,]  0.6  1.3333333 0.09320
+ [8,]  0.7  1.0000000 0.16024
+ [9,]  0.8  0.6666667 0.25350
+[10,]  0.9  0.3333333 0.36990
+[11,]  1.0  0.0000000 0.50000
+[12,]  1.1 -0.3333333 0.36990
+[13,]  1.2 -0.6666667 0.25350
+[14,]  1.3 -1.0000000 0.16024
+[15,]  1.4 -1.3333333 0.09320
+[16,]  1.5 -1.6666667 0.04985
+[17,]  1.6 -2.0000000 0.02454
+[18,]  1.7 -2.3333333 0.01114
+[19,]  1.8 -2.6666667 0.00468
+[20,]  1.9 -3.0000000 0.00182
+[21,]  2.0 -3.3333333 0.00066
+
+}
+ \keyword{ ~htest }
+ \keyword{ ~models }
+

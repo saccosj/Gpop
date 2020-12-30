@@ -1,0 +1,116 @@
+\name{Gpop.ttest.1sample}
+\alias{Gpop.ttest.1sample}
+
+\title{
+Predict Generalization of One Sample t-tests to a Superpopulation that Invalidates the Statistical Inference
+}
+
+\description{
+Receives an observed sample mean and sd and population mu. Runs an iterative process where t-tests are run until the statistical inference at a given alpha is invalidated. This is done by increasing or decreasing mu by "G", where "G" is defined as Cohen's d times sigma (estimated by the sample sd).
+}
+
+\usage{
+Gpop.ttest.1sample(xbar,
+                   sd,
+                   mu,
+                   n,
+                   tails = 1,
+                   alpha = 0.05,
+                   Gmax = 10,
+                   steps = 0.0001,
+                   full = F,
+                   digits = 5)
+}
+
+\arguments{
+  \item{xbar}{
+  The observed sample mean
+  }
+  \item{sd}{
+  The observed sample standard deviation
+  }
+  \item{mu}{
+  The hypothesized population value
+  }
+  \item{n}{
+  The observed sample size
+  }
+  \item{tails}{
+  The number of tails for statistic inference tests. The default is 1, and can be changed to 2.
+  }
+  \item{alpha}{
+  The alpha criteria set for statistical inference tests. The default is .05.
+  }
+  \item{Gmax}{
+  The maximum value G can take in the iterated t-tests.
+  }
+  \item{steps}{
+  The increment that G increases (or decreases) to reach Gmax in the iterated t-tests.
+  }
+  \item{full}{
+  When set to TRUE, displays the results of each iterated test as well as when/if the statistical inference validates once again. The default is FALSE.
+  }
+  \item{digits}{
+  The number of digits to round produced output. The default is 5.
+  }
+}
+
+\value{
+  \item{output }{If full = FALSE, returns a string containing observed t-test results, its p-value, the Cohen's d and G in which the inference was invalidated, the difference between xbar and G, and the probability of that G occurring. If full = TRUE, the prior information is returned, as well as, another set of these values if the statistical inference is validated again at some larger G. Additionally, "results", described below is returned.}
+  \item{results }{If full = TRUE, a multidimensional array is returned containing the results of each iterated t-test performed. This includes the utilized G, the resulting t, and its p-value.}
+
+}
+\references{
+}
+\author{
+Shane J Sacco
+}
+\note{
+}
+
+\section{Warning }{If you enter sample values for an observed t-test that are not already statistically significant, you must change full to "TRUE" to view when observed inference becomes validated.}
+
+\seealso{
+}
+
+\examples{
+##EXAMPLE 1
+Gpop.ttest.1sample (xbar = 1, sd = 3, mu = 0, n = 125, tails = 1, alpha = 0.05, Gmax = 10, steps = 0.0001, full = F, digits = 5)
+
+#EXAMPLE 1 OUTPUT
+[1] P-value >  0.05  @ d =  0.1851 , G = 0.5553 , xbar - G =  0.4447 , p of G =  0.02029
+
+
+#EXAMPLE 2
+Gpop.ttest.1sample (xbar = 110, sd = 56.8, mu = 140, n = 68, tails = 2, alpha = 0.05, Gmax = 2, steps = 0.1, full = T, digits = 3)
+
+#EXAMPLE 2 OUTPUT
+[1] P-value >  0.05  @ d =  0.2 , G = 11.36 , xbar - G =  121.36 , p of G =  0.104
+[1] P-value <  0.05  @ d =  0.7 , G = 39.76 , xbar - G =  149.76 , p of G =  0
+      [,1]       [,2]  [,3]
+ [1,]  0.0 -4.3553933 0.000
+ [2,]  0.1 -3.5307721 0.001
+ [3,]  0.2 -2.7061510 0.009
+ [4,]  0.3 -1.8815299 0.064
+ [5,]  0.4 -1.0569088 0.294
+ [6,]  0.5 -0.2322876 0.817
+ [7,]  0.6  0.5923335 0.556
+ [8,]  0.7  1.4169546 0.161
+ [9,]  0.8  2.2415757 0.028
+[10,]  0.9  3.0661969 0.003
+[11,]  1.0  3.8908180 0.000
+[12,]  1.1  4.7154391 0.000
+[13,]  1.2  5.5400602 0.000
+[14,]  1.3  6.3646814 0.000
+[15,]  1.4  7.1893025 0.000
+[16,]  1.5  8.0139236 0.000
+[17,]  1.6  8.8385447 0.000
+[18,]  1.7  9.6631659 0.000
+[19,]  1.8 10.4877870 0.000
+[20,]  1.9 11.3124081 0.000
+[21,]  2.0 12.1370292 0.000
+
+}
+ \keyword{ ~htest }
+ \keyword{ ~models }
+

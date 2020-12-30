@@ -1,0 +1,124 @@
+\name{Gpop.ttest.2sample}
+\alias{Gpop.ttest.2sample}
+
+\title{
+Predict Generalization of Two Sample t-tests to a Superpopulation that Invalidates the Statistical Inference
+}
+
+\description{
+Receives an observed sample means and sds of two independent groups. Runs an iterative process where t-tests are run until the statistical inference at a given alpha is invalidated. This is done by increasing or decreasing the xbar of group 2 (labeled mu) by "G", where "G" is defined as Cohen's d times the sd of group 2 (labeled sigma).
+}
+
+\usage{
+Gpop.ttest.2sample(xbar,
+                   sd,
+                   n1,
+                   mu,
+                   sigma,
+                   n2,
+                   tails = 1,
+                   alpha = 0.05,
+                   Gmax = 10,
+                   steps = 0.0001,
+                   full = F,
+                   digits = 5)
+}
+
+\arguments{
+  \item{xbar}{
+  The observed sample mean of group 1
+  }
+  \item{sd}{
+  The observed sample standard deviation of group 1
+  }
+  \item{n1}{
+  The observed sample size of group 1
+  }
+  \item{mu}{
+  The observed sample mean of group 2
+  }
+  \item{sigma}{
+  The observed sample standard deviation of group 2
+  }
+  \item{n2}{
+  The observed sample size of group 2
+  }
+  \item{tails}{
+  The number of tails for statistic inference tests. The default is 1, and can be changed to 2.
+  }
+  \item{alpha}{
+  The alpha criteria set for statistical inference tests. The default is .05.
+  }
+  \item{Gmax}{
+  The maximum value G can take in the iterated t-tests.
+  }
+  \item{steps}{
+  The increment that G increases (or decreases) to reach Gmax in the iterated t-tests.
+  }
+  \item{full}{
+  When set to TRUE, displays the results of each iterated test as well as when/if the statistical inference validates once again. The default is FALSE.
+  }
+  \item{digits}{
+  The number of digits to round produced output. The default is 5.
+  }
+}
+
+\value{
+  \item{output }{If full = FALSE, returns a string containing observed t-test results, its p-value, the Cohen's d and G in which the inference was invalidated, the difference between xbar and mu-G, and the probability of that G occurring. If full = TRUE, the prior information is returned, as well as, another set of these values if the statistical inference is validated again at some larger G. Additionally, "results", described below is returned.}
+  \item{results }{If full = TRUE, a multidimensional array is returned containing the results of each iterated t-test performed. This includes the utilized G, the resulting t, and its p-value.}
+
+}
+\references{
+}
+\author{
+Shane J Sacco
+}
+\note{
+}
+
+\section{Warning }{If you enter sample values for an observed t-test that are not already statistically significant, you must change full to "TRUE" to view when observed inference becomes validated.}
+
+\seealso{
+}
+
+\examples{
+##EXAMPLE 1
+Gpop.ttest.2sample(xbar = 30, sd = 25, n1 = 100, mu = 29, sigma = 25, n2 = 105, tails = 1, alpha = 0.05, Gmax = 10, steps = 0.0001, full = F, digits = 5)
+
+#EXAMPLE 1 OUTPUT
+[1] P-value >  0.05  @ d =  0.0171 , G = 0.4275 , xbar - mu + G =  1.4275 , p of G =  0.10927
+
+
+#EXAMPLE 2
+Gpop.ttest.2sample(xbar = 130, sd = 45, n1 = 34, mu = 115, sigma = 48, n2 = 50, tails = 2, alpha = 0.05, Gmax = 1, steps = 0.05, full = T, digits = 5)
+
+#EXAMPLE 2 OUTPUT
+[1] P-value >  0.05  @ d =  0.2 , G = 9.6 , xbar - mu + G =  24.6 , p of G =  0
+[1] P-value >  0.05  @ d =  0.35 , G = 16.8 , xbar - mu + G =  31.8 , p of G =  0
+      [,1]        [,2]    [,3]
+ [1,] 0.00   9.1741316 0.00000
+ [2,] 0.05   7.7062705 0.00000
+ [3,] 0.10   6.2384095 0.00000
+ [4,] 0.15   4.7705484 0.00001
+ [5,] 0.20   3.3026874 0.00142
+ [6,] 0.25   1.8348263 0.07016
+ [7,] 0.30   0.3669653 0.71459
+ [8,] 0.35  -1.1008958 0.27416
+ [9,] 0.40  -2.5687568 0.01202
+[10,] 0.45  -4.0366179 0.00012
+[11,] 0.50  -5.5044789 0.00000
+[12,] 0.55  -6.9723400 0.00000
+[13,] 0.60  -8.4402011 0.00000
+[14,] 0.65  -9.9080621 0.00000
+[15,] 0.70 -11.3759232 0.00000
+[16,] 0.75 -12.8437842 0.00000
+[17,] 0.80 -14.3116453 0.00000
+[18,] 0.85 -15.7795063 0.00000
+[19,] 0.90 -17.2473674 0.00000
+[20,] 0.95 -18.7152284 0.00000
+[21,] 1.00 -20.1830895 0.00000
+
+}
+ \keyword{ ~htest }
+ \keyword{ ~models }
+
